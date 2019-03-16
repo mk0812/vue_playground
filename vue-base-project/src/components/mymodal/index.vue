@@ -4,7 +4,16 @@
         <button @click="openModal">open</button>
 
         <!-- ModalWindow Component define -->
-        <MyModal></MyModal>
+        <MyModal v-if="modal" @close="closeModal">
+            <p>Vue.js Modal Window!!</p>
+            <div>
+                <input type="text" v-model="message">
+            </div>
+            <!-- footerスロットコンテンツ -->
+            <template slot="footer">
+                <button @click="doSend">send</button>
+            </template>
+        </MyModal>
     </div>
 </template>
 
@@ -27,6 +36,15 @@ export default {
         closeModal: () => {
             this.modal = false
         },
+        doSend: () => {
+            if(this.message.length > 0){
+                alert(this.message)
+                this.message = ''
+                this.closeModal()
+            }else{
+                alert("message is not valid")
+            }
+        }
     },
 }
 </script>
